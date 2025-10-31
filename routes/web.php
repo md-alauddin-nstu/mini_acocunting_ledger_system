@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LedgerController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -17,3 +18,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 require __DIR__.'/settings.php';
+
+Route::get('/ledger/report/{account_id}', [LedgerController::class, 'report']);
