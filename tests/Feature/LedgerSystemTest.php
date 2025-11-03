@@ -1,7 +1,7 @@
 <?php
 
-use App\Facades\Ledger;
-use App\Models\Account;
+use App\Domains\Account\Facades\Ledger;
+use App\Domains\Account\Models\Account;
 
 test('facade and eloquent event update balance atomically', function () {
     $account = Account::create(['name' => 'Test Account', 'balance' => 0.00]);

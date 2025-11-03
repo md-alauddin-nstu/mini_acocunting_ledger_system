@@ -1,34 +1,26 @@
 <?php
 
-namespace App\Services;
+namespace App\Domains\Account\Services;
 
-use App\Models\Account;
-use App\Models\Transaction;
+use App\Domains\Account\BalanceStrategyFactory;
+use App\Domains\Account\Models\Account;
+use App\Domains\Account\Models\Transaction;
 use Illuminate\Support\Facades\DB;
 
 class LedgerService
 {
+    public function __construct(protected BalanceStrategyFactory $strategyFactory) {}
+
     public function updateBalance(Transaction $transaction): Account
     {
         $account = $transaction->account;
+
         if (! $account) {
             throw new \Exception("Account not found for transaction id: {$transaction->id}");
         }
 
-        $amount = $transaction->amount;
-        $newBalance = $account->balance;
-
-        switch ($transaction->type) {
-            case 'debit':
-                $newBalance += $amount;
-                break;
-            case 'credit':
-                $newBalance -= $amount;
-                break;
-            default:
-                throw new \InvalidArgumentException("Invalid transaction type: {$transaction->type}");
-                break;
-        }
+        $strategy = $this->strategyFactory->getStrategy($transaction->type);
+        $newBalance = $strategy->calculateNewBalance($account, $transaction->amount);
 
         return DB::transaction(function () use ($account, $newBalance) {
             $account->balance = $newBalance;

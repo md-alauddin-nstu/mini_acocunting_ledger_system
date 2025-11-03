@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\Ledger;
+use App\Domains\Account\Facades\Ledger;
 use Illuminate\Http\JsonResponse;
 
 class LedgerController extends Controller

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Domains\Account\Models;
 
-use App\Services\LedgerService;
+use App\Domains\Account\Services\LedgerService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

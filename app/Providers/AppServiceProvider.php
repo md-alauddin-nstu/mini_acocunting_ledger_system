@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Services\LedgerService;
+use App\Domains\Account\BalanceStrategyFactory;
+use App\Domains\Account\Services\LedgerService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton('ledger', function ($app) {
-            return new LedgerService;
+            return new LedgerService($app->make(BalanceStrategyFactory::class));
         });
     }
 

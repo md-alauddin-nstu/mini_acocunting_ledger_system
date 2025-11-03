@@ -39,10 +39,10 @@ The primary interface is the Ledger Facade, which ensures that for every transac
 Run the following in `php artisan tinker`:
 
 ```php
-$bank = App\Models\Account::where('name', 'Bank')->first();
+$bank = App\Domains\Account\Models\Account::where('name', 'Bank')->first();
 
 // Debit: Deposit $1500.00
-\App\Facades\Ledger::addTransaction(
+\App\Domains\Account\Facades\Ledger::addTransaction(
     $bank->id,
     'debit',
     1500.00,
@@ -50,7 +50,7 @@ $bank = App\Models\Account::where('name', 'Bank')->first();
 );
 
 // Credit: Withdrawal $200.00
-\App\Facades\Ledger::addTransaction(
+\App\Domains\Account\Facades\Ledger::addTransaction(
     $bank->id,
     'credit',
     200.00,
