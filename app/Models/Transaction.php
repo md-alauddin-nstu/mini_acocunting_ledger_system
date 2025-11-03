@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TransactionType;
 use App\Services\LedgerService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,11 +13,15 @@ class Transaction extends Model
 
     protected $casts = [
         'amount' => 'decimal:2',
+        'type' => TransactionType::class,
     ];
 
     protected static function booted(): void
     {
         static::created(function (Transaction $transaction) {
+            if (! $transaction->relationLoaded('account')) {
+                $transaction->load('account');
+            }
             app(LedgerService::class)->updateBalance($transaction);
         });
     }

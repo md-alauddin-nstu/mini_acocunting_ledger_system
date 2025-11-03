@@ -15,20 +15,7 @@ class LedgerService
             throw new \Exception("Account not found for transaction id: {$transaction->id}");
         }
 
-        $amount = $transaction->amount;
-        $newBalance = $account->balance;
-
-        switch ($transaction->type) {
-            case 'debit':
-                $newBalance += $amount;
-                break;
-            case 'credit':
-                $newBalance -= $amount;
-                break;
-            default:
-                throw new \InvalidArgumentException("Invalid transaction type: {$transaction->type}");
-                break;
-        }
+        $newBalance = $transaction->type->apply($account->balance, $transaction->amount);
 
         return DB::transaction(function () use ($account, $newBalance) {
             $account->balance = $newBalance;
