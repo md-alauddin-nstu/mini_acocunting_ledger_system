@@ -11,6 +11,10 @@
         <testsuite name="Feature">
             <directory>tests/Feature</directory>
         </testsuite>
+        <!-- Custom Test Suite for the Account Domain -->
+        <testsuite name="Account">
+            <directory suffix="Test.php">./app/Domains/Account/Tests</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>
