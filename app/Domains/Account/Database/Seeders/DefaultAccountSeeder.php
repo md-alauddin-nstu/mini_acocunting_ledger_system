@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders;
+namespace app\Domains\Account\Database\Seeders;
 
 use App\Domains\Account\Models\Account;
 use Illuminate\Database\Seeder;

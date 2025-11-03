@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $domainPath = $this->app->basePath('app/Domains/Account');
+        $this->loadMigrationsFrom([
+            $domainPath.'/Database/Migrations',
+        ]);
+
     }
 }
